@@ -13,7 +13,7 @@ func main() {
             if v {
                 fmt.Print("#")
             } else {
-                fmt.Print("_")
+                fmt.Print("o")
             }
         } 
         fmt.Println()
