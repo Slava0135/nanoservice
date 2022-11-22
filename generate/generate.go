@@ -4,13 +4,11 @@ import (
 	"math/rand"
 	"slava0135/nanoservice/layout"
 	"slava0135/nanoservice/rules"
-	"time"
 )
 
 func NewGameLayout() layout.Layout {
 	var gameLayout layout.Layout
 	for shipLen, shipCount := range rules.Ships {
-		rand.Seed(time.Now().UnixNano())
 		for s := 0; s < int(shipCount); s++ {
 		retry:
 			x := uint(rand.Uint32() % rules.N)
