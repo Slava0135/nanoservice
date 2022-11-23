@@ -5,12 +5,16 @@ import (
 	"net/http"
 	"slava0135/nanoservice/handlers"
 	"time"
-	"log"
+
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
+	logrus.Info("starting up")
 	rand.Seed(time.Now().UnixNano())
 
+	port := ":8080"
 	http.HandleFunc("/generate", handlers.GenerateGameLayout)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	logrus.Info("listening on port ", port)
+	logrus.Fatal(http.ListenAndServe(port, nil))
 }
