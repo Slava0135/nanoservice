@@ -63,14 +63,15 @@ func NewGameLayout() (layout.Layout, []layout.Ship) {
 	return gameLayout, ships
 }
 
-func Image(l layout.Layout) *image.RGBA {
-	img := image.NewRGBA(image.Rect(0, 0, rules.N, rules.N))
-	for x := 0; x < rules.N; x++ {
-		for y := 0; y < rules.N; y++ {
-			if l[x][y] {
-				img.Set(x, y, color.Black)
+func Image(l layout.Layout, scale int) *image.RGBA {
+	size := scale * rules.N
+	img := image.NewRGBA(image.Rect(0, 0, size, size))
+	for x := 0; x < size; x++ {
+		for y := 0; y < size; y++ {
+			if l[x/scale][y/scale] {
+				img.Set(x, y, color.RGBA{128, 128, 128, 255})
 			} else {
-				img.Set(x, y, color.White)
+				img.Set(x, y, color.RGBA{0, 0, 128, 255})
 			}
 		}
 	}

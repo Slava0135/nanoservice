@@ -26,7 +26,7 @@ func GenerateGameLayout(w http.ResponseWriter, req *http.Request) {
 func GenerateGameLayoutImage(w http.ResponseWriter, req *http.Request) {
 	log.Info("handle generate game layout as image request")
 	layout, _ := generate.NewGameLayout()
-	img := generate.Image(layout)
+	img := generate.Image(layout, 16)
 	imgBytes := new(bytes.Buffer)
 	err := png.Encode(imgBytes, img)
 	if err != nil {
