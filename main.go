@@ -16,6 +16,7 @@ func main() {
 	port := ":8080"
 	http.HandleFunc("/generate", handlers.GenerateGameLayout)
 	http.HandleFunc("/validate", handlers.ValidateShipPlacement)
+	http.HandleFunc("/replay", handlers.ReplayGame)
 	log.Info("listening on port ", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }
