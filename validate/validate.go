@@ -8,9 +8,11 @@ import (
 func Validate(gameLayout layout.Layout) bool {
 	for x := uint(0); x < rules.N; x++ {
 		for y := uint(0); y < rules.N; y++ {
-			for _, p := range layout.LinkedCornerSquares(x, y) {
-				if gameLayout[p.X][p.Y] {
-					return false
+			if gameLayout[x][y] {
+				for _, p := range layout.LinkedCornerSquares(x, y) {
+					if gameLayout[p.X][p.Y] {
+						return false
+					}
 				}
 			}
 		}
@@ -40,6 +42,14 @@ func Validate(gameLayout layout.Layout) bool {
 		}
 		ships[length]++
 	}
+	// large ships (length > 1) are counted towards 1-sized ships
+	var largeShipParts uint
+	for i := 2; i < rules.N; i++ {
+		largeShipParts += uint(i) * ships[i]
+	}
+	ships[1] -= largeShipParts
+	// 1-sized ships counted twice
+	ships[1] /= 2
 	for i := 1; i < len(rules.Ships); i++ {
 		if ships[i] != rules.Ships[i] {
 			return false
