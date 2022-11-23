@@ -51,9 +51,9 @@ func NewGameLayout() (layout.Layout, []layout.Ship) {
 				}
 			}
 			if isHorizontal {
-				ships = append(ships, layout.NewShip(x, y, x+uint(shipLen), y))
+				ships = append(ships, layout.NewShip(x, y, x+uint(shipLen-1), y))
 			} else {
-				ships = append(ships, layout.NewShip(x, y, x, y+uint(shipLen)))
+				ships = append(ships, layout.NewShip(x, y, x, y+uint(shipLen-1)))
 			}
 			gameLayout = nextLayout
 		}
