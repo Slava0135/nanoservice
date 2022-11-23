@@ -24,13 +24,13 @@ func ValidateShipPlacement(w http.ResponseWriter, req *http.Request) {
 	b, err := io.ReadAll(req.Body)
 	if err != nil {
 		log.Info("error when reading body: ", err)
-		http.Error(w, err.Error(), 400)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	layout, err := layout.ParseLayout(string(b))
 	if err != nil {
 		log.Info("error when reading body: ", err)
-		http.Error(w, err.Error(), 400)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	fmt.Fprintf(w, "%v\n", validate.Validate(layout))
