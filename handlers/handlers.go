@@ -27,11 +27,11 @@ func ValidateShipPlacement(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	layout, err := layout.ParseLayout(string(b))
+	gameLayout, _, err := layout.ParseLayout(string(b))
 	if err != nil {
 		log.Info("error when reading body: ", err)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	fmt.Fprintf(w, "%v\n", validate.Validate(layout))
+	fmt.Fprintf(w, "%v\n", validate.Validate(gameLayout))
 }
