@@ -6,8 +6,9 @@ import (
 	"slava0135/nanoservice/rules"
 )
 
-func NewGameLayout() layout.Layout {
+func NewGameLayout() (layout.Layout, []layout.Ship) {
 	var gameLayout layout.Layout
+	var ships []layout.Ship
 	for shipLen, shipCount := range rules.Ships {
 		for s := 0; s < int(shipCount); s++ {
 		retry:
@@ -23,7 +24,8 @@ func NewGameLayout() layout.Layout {
 			}
 			nextLayout := gameLayout
 			nextLayout[x][y] = true
-			if rand.Int()%2 == 0 {
+			isHorizontal := rand.Int()%2 == 0
+			if isHorizontal {
 				if x+uint(shipLen) >= rules.N {
 					goto retry
 				}
@@ -48,8 +50,13 @@ func NewGameLayout() layout.Layout {
 					nextLayout[x][y+i] = true
 				}
 			}
+			if isHorizontal {
+				ships = append(ships, layout.NewShip(x, y, x+uint(shipLen), y))
+			} else {
+				ships = append(ships, layout.NewShip(x, y, x, y+uint(shipLen)))
+			}
 			gameLayout = nextLayout
 		}
 	}
-	return gameLayout
+	return gameLayout, ships
 }

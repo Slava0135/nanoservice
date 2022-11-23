@@ -1,13 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
-	"slava0135/nanoservice/generate"
+	"net/http"
+	"slava0135/nanoservice/handlers"
 	"time"
+	"log"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	fmt.Println(generate.NewGameLayout())
+
+	http.HandleFunc("/generate", handlers.GenerateGameLayout)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

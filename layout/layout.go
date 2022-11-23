@@ -11,6 +11,10 @@ type Point struct {
 	X, Y uint
 }
 
+type Ship struct {
+	P1, P2 Point
+}
+
 func (l Layout) String() string {
 	var sb strings.Builder
 	for _, v := range l {
@@ -24,6 +28,10 @@ func (l Layout) String() string {
 		sb.WriteByte('\n')
 	}
 	return sb.String()
+}
+
+func NewShip(x1, y1, x2, y2 uint) Ship {
+	return Ship{Point{x1, y1}, Point{x2, y2}}
 }
 
 func LinkedSquares(x, y uint) []Point {
