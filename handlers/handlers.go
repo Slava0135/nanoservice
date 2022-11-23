@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"bytes"
 	"fmt"
+	"image/png"
 	"io"
 	"net/http"
 	"slava0135/nanoservice/generate"
@@ -19,6 +21,22 @@ func GenerateGameLayout(w http.ResponseWriter, req *http.Request) {
 	for _, s := range ships {
 		fmt.Fprintf(w, "%v\n", s)
 	}
+}
+
+func GenerateGameLayoutImage(w http.ResponseWriter, req *http.Request) {
+	log.Info("handle generate game layout as image request")
+	layout, _ := generate.NewGameLayout()
+	img := generate.Image(layout, 16)
+	imgBytes := new(bytes.Buffer)
+	err := png.Encode(imgBytes, img)
+	if err != nil {
+		log.Info("error encoding image: ", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "image/png")
+	w.Write(imgBytes.Bytes())
 }
 
 func ValidateShipPlacement(w http.ResponseWriter, req *http.Request) {
