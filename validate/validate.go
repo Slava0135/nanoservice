@@ -45,7 +45,7 @@ func Validate(gameLayout layout.Layout) bool {
 	// large ships (length > 1) are counted towards 1-sized ships
 	var largeShipParts uint
 	for i := 2; i < rules.N; i++ {
-		largeShipParts += uint(i)*ships[i]
+		largeShipParts += uint(i) * ships[i]
 	}
 	ships[1] -= largeShipParts
 	// 1-sized ships counted twice
