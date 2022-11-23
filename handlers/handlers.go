@@ -71,5 +71,17 @@ func ReplayGame(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	fmt.Fprintf(w, "%v\n", shots.ReplayGame(ships, gameShots))
+	res := shots.ReplayGame(ships, gameShots)
+	fmt.Fprintf(w, "Untouched:\n")
+	for _, s := range res.Untouched {
+		fmt.Fprintf(w, "%v\n", s)
+	}
+	fmt.Fprintf(w, "Damaged:\n")
+	for _, s := range res.Damaged {
+		fmt.Fprintf(w, "%v\n", s)
+	}
+	fmt.Fprintf(w, "Destroyed:\n")
+	for _, s := range res.Destroyed {
+		fmt.Fprintf(w, "%v\n", s)
+	}
 }
