@@ -1,6 +1,8 @@
 package generate
 
 import (
+	"image"
+	"image/color"
 	"math/rand"
 	"slava0135/nanoservice/layout"
 	"slava0135/nanoservice/rules"
@@ -59,4 +61,18 @@ func NewGameLayout() (layout.Layout, []layout.Ship) {
 		}
 	}
 	return gameLayout, ships
+}
+
+func Image(l layout.Layout) *image.RGBA {
+	img := image.NewRGBA(image.Rect(0, 0, rules.N, rules.N))
+	for x := 0; x < rules.N; x++ {
+		for y := 0; y < rules.N; y++ {
+			if l[x][y] {
+				img.Set(x, y, color.Black)
+			} else {
+				img.Set(x, y, color.White)
+			}
+		}
+	}
+	return img
 }
