@@ -47,7 +47,7 @@ func ReplayGame(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	s := string(b)
-	bodyParts := strings.Split(s, "@")
+	bodyParts := strings.Split(s, "\n+\n")
 	if len(bodyParts) != 2 {
 		err := fmt.Errorf("more than 2 parts (ships and shots) detected")
 		log.Info("error when reading body: ", err)
