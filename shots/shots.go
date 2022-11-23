@@ -29,5 +29,45 @@ func ParseShots(s string) ([]layout.Point, error) {
 
 func ReplayGame(ships []layout.Ship, shots []layout.Point) Results {
 	var res Results
+	for _, ship := range ships {
+		var segments []layout.Point
+		if ship.P1.X != ship.P2.X {
+			var x_low, x_high uint
+			if ship.P1.X < ship.P2.X {
+				x_low, x_high = ship.P1.X, ship.P2.X
+			} else {
+				x_low, x_high = ship.P2.X, ship.P1.X
+			}
+			for x := x_low; x <= x_high; x++ {
+				segments = append(segments, layout.Point{X: x, Y: ship.P1.Y})
+			}
+		} else {
+			var y_low, y_high uint
+			if ship.P1.Y < ship.P2.Y {
+				y_low, y_high = ship.P1.Y, ship.P2.Y
+			} else {
+				y_low, y_high = ship.P1.Y, ship.P2.Y
+			}
+			for y := y_low; y <= y_high; y++ {
+				segments = append(segments, layout.Point{X: ship.P1.X, Y: y})
+			}
+		}
+		length := len(segments)
+		for _, shot := range shots {
+			for i := 0; i < len(segments); i++ {
+				if shot == segments[i] {
+					segments = append(segments[:i], segments[i+1:]...)
+					break
+				}
+			}
+		}
+		if length == len(segments) {
+			res.Untouched = append(res.Untouched, ship)
+		} else if len(segments) == 0 {
+			res.Destroyed = append(res.Destroyed, ship)
+		} else {
+			res.Damaged = append(res.Damaged, ship)
+		}
+	}
 	return res
 } 
