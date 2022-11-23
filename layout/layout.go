@@ -1,6 +1,7 @@
 package layout
 
 import (
+	"fmt"
 	"slava0135/nanoservice/rules"
 	"strings"
 )
@@ -32,6 +33,45 @@ func (l Layout) String() string {
 
 func NewShip(x1, y1, x2, y2 uint) Ship {
 	return Ship{Point{x1, y1}, Point{x2, y2}}
+}
+
+func ParseLayout(s string) (l Layout, err error) {
+	var layout Layout
+	for i, line := range strings.Split(s, "\n") {
+		var x1, y1, x2, y2 uint
+		_, err := fmt.Sscanf(line, "{{%d %d} {%d %d}}", &x1, &y1, &x2, &y2)
+		if err != nil {
+			return layout, fmt.Errorf("failed to parse line %d: %v", i+1, err)
+		}
+		if x1 != x2 && y1 != y2 {
+			return layout, fmt.Errorf("failed to parse line %d: points are not on the same line", i+1)
+		}
+		if x1 >= rules.N || x2 >= rules.N || y1 >= rules.N || y2 >= rules.N {
+			return layout, fmt.Errorf("failed to parse line %d: points are outside of game field", i+1)
+		}
+		if x1 != x2 {
+			var x_low, x_high uint
+			if x1 < x2 {
+				x_low, x_high = x1, x2
+			} else {
+				x_low, x_high = x2, x1
+			}
+			for x := x_low; x <= x_high; x++ {
+				layout[x][y1] = true
+			}
+		} else {
+			var y_low, y_high uint
+			if y1 < y2 {
+				y_low, y_high = y1, y2
+			} else {
+				y_low, y_high = y2, y1
+			}
+			for y := y_low; y <= y_high; y++ {
+				layout[x1][y] = true
+			}
+		}
+	}
+	return layout, nil
 }
 
 func LinkedSquares(x, y uint) []Point {
