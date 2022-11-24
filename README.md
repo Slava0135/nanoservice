@@ -6,7 +6,7 @@ Small service resembling "battleship" puzzle game that:
 
 * Can generate ship layout as plain text or image
 * Can validate ship layout
-* Replay game given layout and shots made
+* Can replay game given layout and shots made
 
 Game variation:
 
