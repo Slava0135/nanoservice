@@ -116,22 +116,20 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if checked[x][y] {
 					continue
 				}
-				checked[x][y] = true
-				length := 0
 				xl, yl := x, y 
 				for ; xl < rules.N; xl++ {
 					if !layout[xl][y] {
 						break
 					}
-					length++
 					checked[xl][y] = true
 				}
-				for ; yl < rules.N; yl++ {
-					if !layout[x][yl] {
-						break
+				if x == xl {
+					for ; yl < rules.N; yl++ {
+						if !layout[x][yl] {
+							break
+						}
+						checked[x][yl] = true
 					}
-					length++
-					checked[x][yl] = true
 				}
 				ships = append(ships, NewShip(x, y, xl, yl))
 			}
