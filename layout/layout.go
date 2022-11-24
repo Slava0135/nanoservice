@@ -116,14 +116,17 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if checked[x][y] {
 					continue
 				}
-				xl, yl := x, y 
-				for ; xl < rules.N; xl++ {
-					if !layout[xl][y] {
-						break
+				checked[x][y] = true
+				xl, yl := x, y
+				if x < rules.N-1 && layout[x+1][y] {
+					for ; xl < rules.N; xl++ {
+						if !layout[xl][y] {
+							break
+						}
+						checked[xl][y] = true
 					}
-					checked[xl][y] = true
 				}
-				if x == xl {
+				if y < rules.N-1 && layout[x][y+1] {
 					for ; yl < rules.N; yl++ {
 						if !layout[x][yl] {
 							break
