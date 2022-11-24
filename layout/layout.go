@@ -99,7 +99,7 @@ func ParseLayoutGrid(s string) (layout Layout, ships []Ship, err error) {
 			case emptyChar:
 				layout[x][y] = false
 			default:
-				return layout, ships, fmt.Errorf("line %d has invalid char at pos %d", x+1, y+1)
+				return layout, ships, fmt.Errorf("line %d has invalid char `%c` at pos %d", x+1, c, y+1)
 			}
 		}
 	}
