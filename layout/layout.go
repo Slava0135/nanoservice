@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+const (
+	shipChar  = '#'
+	emptyChar = 'o'
+)
+
 type Layout [rules.N][rules.N]bool
 
 type Point struct {
@@ -21,9 +26,9 @@ func (l Layout) String() string {
 	for _, v := range l {
 		for _, v := range v {
 			if v {
-				sb.WriteByte('#')
+				sb.WriteByte(shipChar)
 			} else {
-				sb.WriteByte('o')
+				sb.WriteByte(emptyChar)
 			}
 		}
 		sb.WriteByte('\n')
@@ -36,6 +41,14 @@ func NewShip(x1, y1, x2, y2 uint) Ship {
 }
 
 func ParseLayout(s string) (layout Layout, ships []Ship, err error) {
+	if strings.HasPrefix(s, "{") {
+		return ParseLayoutShips(s)
+	} else {
+		return ParseLayoutGrid(s)
+	}
+}
+
+func ParseLayoutShips(s string) (layout Layout, ships []Ship, err error) {
 	for i, line := range strings.Split(s, "\n") {
 		var x1, y1, x2, y2 uint
 		_, err := fmt.Sscanf(line, "{{%d %d} {%d %d}}", &x1, &y1, &x2, &y2)
@@ -72,6 +85,60 @@ func ParseLayout(s string) (layout Layout, ships []Ship, err error) {
 		}
 	}
 	return layout, ships, nil
+}
+
+func ParseLayoutGrid(s string) (layout Layout, ships []Ship, err error) {
+	for y, line := range strings.Split(s, "\n") {
+		if len(line) != rules.N {
+			return layout, ships, fmt.Errorf("line %d has invalid length", y+1)
+		}
+		for x, c := range line {
+			switch c {
+			case shipChar:
+				layout[x][y] = true
+			case emptyChar:
+				layout[x][y] = false
+			default:
+				return layout, ships, fmt.Errorf("line %d has invalid char `%c` at pos %d", x+1, c, y+1)
+			}
+		}
+	}
+	ships = ShipsFromLayout(layout)
+	return layout, ships, nil
+}
+
+func ShipsFromLayout(layout Layout) []Ship {
+	var ships []Ship
+	var checked Layout
+	for x := uint(0); x < rules.N; x++ {
+		for y := uint(0); y < rules.N; y++ {
+			if layout[x][y] {
+				if checked[x][y] {
+					continue
+				}
+				checked[x][y] = true
+				xl, yl := x, y
+				if x < rules.N-1 && layout[x+1][y] {
+					for ; xl < rules.N; xl++ {
+						if !layout[xl][y] {
+							break
+						}
+						checked[xl][y] = true
+					}
+				}
+				if y < rules.N-1 && layout[x][y+1] {
+					for ; yl < rules.N; yl++ {
+						if !layout[x][yl] {
+							break
+						}
+						checked[x][yl] = true
+					}
+				}
+				ships = append(ships, NewShip(x, y, xl, yl))
+			}
+		}
+	}
+	return ships
 }
 
 func LinkedSquares(x, y uint) []Point {

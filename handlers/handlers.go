@@ -23,6 +23,12 @@ func GenerateGameLayout(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func GenerateGameLayoutGrid(w http.ResponseWriter, req *http.Request) {
+	log.Info("handle generate game layout as grid request")
+	layout, _ := generate.NewGameLayout()
+	fmt.Fprintf(w, "%v\n", layout)
+}
+
 func GenerateGameLayoutImage(w http.ResponseWriter, req *http.Request) {
 	log.Info("handle generate game layout as image request")
 	layout, _ := generate.NewGameLayout()
