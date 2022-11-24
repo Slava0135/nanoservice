@@ -90,7 +90,7 @@ func ParseLayoutShips(s string) (layout Layout, ships []Ship, err error) {
 func ParseLayoutGrid(s string) (layout Layout, ships []Ship, err error) {
 	for y, line := range strings.Split(s, "\n") {
 		if len(line) != rules.N {
-			return layout, ships, fmt.Errorf("line %d has invalid length", x+1)
+			return layout, ships, fmt.Errorf("line %d has invalid length", y+1)
 		}
 		for x, c := range line {
 			switch c {
