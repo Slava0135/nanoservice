@@ -40,7 +40,7 @@ func TestLinkedSideSquares(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := LinkedSideSquares(tt.args.X, tt.args.Y); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("LinkedCornerSquares() = %v, want %v", got, tt.want)
+				t.Errorf("LinkedSideSquares() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -56,7 +56,7 @@ func TestLinkedSquares(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := LinkedSquares(tt.args.X, tt.args.Y); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("LinkedCornerSquares() = %v, want %v", got, tt.want)
+				t.Errorf("LinkedSquares() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -68,7 +68,7 @@ func TestLayout_GridParsing(t *testing.T) {
 	s := l.String()
 	pl, _, err := ParseLayout(s[:len(s)-1])
 	if err != nil {
-		t.Fatalf("parsing generated layout shouldn't fail: %v", err)
+		t.Fatalf("parsing layout shouldn't fail: %v", err)
 	}
 	if reflect.DeepEqual(l, pl) != true {
 		t.Fatalf("initial and parsed layouts should be the same:\n%v\n%v", l, pl)
@@ -87,7 +87,7 @@ func TestLayout_ShipParsing(t *testing.T) {
 
 	pl, _, err := ParseLayout(sb.String()[:sb.Len()-1])
 	if err != nil {
-		t.Fatalf("parsing generated layout shouldn't fail: %v", err)
+		t.Fatalf("parsing layout shouldn't fail: %v", err)
 	}
 	if reflect.DeepEqual(l, pl) != true {
 		t.Fatalf("initial and parsed layouts should be the same:\n%v\n%v", l, pl)
