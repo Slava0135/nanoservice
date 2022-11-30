@@ -89,7 +89,7 @@ func TestLayout_ShipParsing(t *testing.T) {
 	if err != nil {
 		t.Fatalf("parsing layout shouldn't fail: %v", err)
 	}
-	if reflect.DeepEqual(l, pl) == true {
+	if reflect.DeepEqual(l, pl) != true {
 		t.Fatalf("initial and parsed layouts should be the same:\n%v\n%v", l, pl)
 	}
 }
