@@ -23,9 +23,9 @@ type Ship struct {
 
 func (l Layout) String() string {
 	var sb strings.Builder
-	for _, v := range l {
-		for _, v := range v {
-			if v {
+	for x := 0; x < rules.N; x++ {
+		for y := 0; y < rules.N; y++ {
+			if l[y][x] {
 				sb.WriteByte(shipChar)
 			} else {
 				sb.WriteByte(emptyChar)
