@@ -1,5 +1,7 @@
 # nanoservice
 
+[![Run Tests](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml)
+
 ## About
 
 Small service resembling "battleship" puzzle game that:
@@ -213,16 +215,16 @@ Output:
 
 ```text
 Untouched:
-{{2 7} {2 9}}
+{{2 7} {2 8}}
 {{4 2} {4 2}}
 {{5 4} {5 4}}
 {{5 8} {5 8}}
-{{7 1} {7 4}}
-{{8 5} {8 8}}
-{{9 2} {9 4}}
+{{7 1} {7 3}}
+{{8 5} {8 7}}
+{{9 2} {9 3}}
 Damaged:
-{{0 0} {0 2}}
-{{0 4} {0 8}}
+{{0 0} {0 1}}
+{{0 4} {0 7}}
 Destroyed:
 {{2 1} {2 1}}
 ```

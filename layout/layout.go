@@ -23,9 +23,9 @@ type Ship struct {
 
 func (l Layout) String() string {
 	var sb strings.Builder
-	for _, v := range l {
-		for _, v := range v {
-			if v {
+	for x := 0; x < rules.N; x++ {
+		for y := 0; y < rules.N; y++ {
+			if l[y][x] {
 				sb.WriteByte(shipChar)
 			} else {
 				sb.WriteByte(emptyChar)
@@ -121,6 +121,7 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if x < rules.N-1 && layout[x+1][y] {
 					for ; xl < rules.N; xl++ {
 						if !layout[xl][y] {
+							xl--
 							break
 						}
 						checked[xl][y] = true
@@ -129,6 +130,7 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if y < rules.N-1 && layout[x][y+1] {
 					for ; yl < rules.N; yl++ {
 						if !layout[x][yl] {
+							yl--
 							break
 						}
 						checked[x][yl] = true
