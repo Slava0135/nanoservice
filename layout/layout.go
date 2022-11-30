@@ -121,6 +121,7 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if x < rules.N-1 && layout[x+1][y] {
 					for ; xl < rules.N; xl++ {
 						if !layout[xl][y] {
+							xl--
 							break
 						}
 						checked[xl][y] = true
@@ -129,6 +130,7 @@ func ShipsFromLayout(layout Layout) []Ship {
 				if y < rules.N-1 && layout[x][y+1] {
 					for ; yl < rules.N; yl++ {
 						if !layout[x][yl] {
+							yl--
 							break
 						}
 						checked[x][yl] = true
