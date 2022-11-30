@@ -1,8 +1,10 @@
 package layout
 
 import (
+	"fmt"
 	"reflect"
 	"slava0135/nanoservice/rules"
+	"strings"
 	"testing"
 )
 
@@ -78,4 +80,52 @@ func TestLinkedSquares(t *testing.T) {
 	}
 }
 
+func TestLayout_GridParsing(t *testing.T) {
+	l := Layout{}
+	
+	l[3][3] = true
+	l[3][4] = true
 
+	l[8][8] = true
+	
+	l[1][0] = true
+	l[2][0] = true
+	l[3][0] = true
+	
+	s := l.String()
+	pl, _, err := ParseLayout(s[:len(s)-1])
+	if err != nil {
+		t.Fatalf("parsing generated layout shouldn't fail: %v", err)
+	}
+	if reflect.DeepEqual(l, pl) != true {
+		t.Fatalf("initial and parsed layouts should be the same:\n%v\n%v", l, pl)
+	}
+}
+
+func TestLayout_ShipParsing(t *testing.T) {
+	l := Layout{}
+	
+	l[3][3] = true
+	l[3][4] = true
+
+	l[8][8] = true
+	
+	l[1][0] = true
+	l[2][0] = true
+	l[3][0] = true
+	
+	ships := ShipsFromLayout(l)
+
+	var sb strings.Builder
+	for _, s := range ships {
+		sb.WriteString(fmt.Sprintf("%v\n", s))
+	}
+
+	pl, _, err := ParseLayout(sb.String()[:sb.Len()-1])
+	if err != nil {
+		t.Fatalf("parsing generated layout shouldn't fail: %v", err)
+	}
+	if reflect.DeepEqual(l, pl) != true {
+		t.Fatalf("initial and parsed layouts should be the same:\n%v\n%v", l, pl)
+	}
+}
