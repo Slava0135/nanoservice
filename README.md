@@ -1,6 +1,8 @@
 # nanoservice
 
-[![Run Tests](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml)
+[![Run Tests (develop)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml/badge.svg?branch=develop)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml) (develop)
+
+[![Run Tests (master)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/Slava0135/nanoservice/actions/workflows/test.yml) (master)
 
 ## About
 
